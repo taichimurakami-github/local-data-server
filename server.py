@@ -1,16 +1,17 @@
-import http.server
+from http.server import HTTPServer
 import socketserver
 import json
+import string
 
-class LocalWebServer:
+class HTTPLocalWebServer:
     def __init__(self, port= 8080):
       self._PORT = port
-      self._Handler = http.server.BaseHTTPRequestHandler
+      self._ADDRESS = ('localhost', port)
 
+    def get_address(self):
+      return self._ADDRESS
 
-    def listen_post(self):
-      PORT = self._PORT
-      Handler = self._Handler
-      with socketserver.TCPServer(("", PORT), Handler) as httpd:
-        print("serving at port:", PORT)
-        httpd.serve_forever()
+    def listen_post(self, RequestHandlerClass):
+      with HTTPServer(self._ADDRESS, RequestHandlerClass) as server:
+        print("serving at:", self._ADDRESS)
+        server.serve_forever()
