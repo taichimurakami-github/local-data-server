@@ -18,7 +18,7 @@ def write_json_file(dataStr, filename):
     print(f"creating new file at '{filepath}'")
     f.write(dataStr)
 
-class JsonPostHandler(BaseHTTPRequestHandler) :
+class FiledataPostHandler(BaseHTTPRequestHandler) :
 
   _FILE_WRITE_DIR_PATH = os.path.join(os.getcwd(), 'data', '{}'.format(datetime.now().date()))
 
