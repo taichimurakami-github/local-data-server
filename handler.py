@@ -1,22 +1,7 @@
+import os
 from datetime import datetime
 from http.server import BaseHTTPRequestHandler
-import json
-import os
 from urllib.parse import parse_qs, urlparse
-from multiprocessing import Process
-
-def write_json_file(dataStr, filename):
-  dirpath = os.path.join(os.getcwd(), 'data', '{}'.format(datetime.now().date()))
-
-  if os.path.exists(dirpath) == False:
-    print(f"creating new dirpath '{dirpath}'")
-    os.makedirs(dirpath)
-
-  filepath = os.path.join(dirpath, filename)
-
-  with open(filepath, 'w') as f:
-    print(f"creating new file at '{filepath}'")
-    f.write(dataStr)
 
 class FiledataPostHandler(BaseHTTPRequestHandler) :
 
@@ -49,13 +34,13 @@ class FiledataPostHandler(BaseHTTPRequestHandler) :
     dirpath = self._FILE_WRITE_DIR_PATH
 
     if os.path.exists(dirpath) == False:
-      print(f"creating new dirpath '{dirpath}'")
+      print(f"creating new directory: '{dirpath}'")
       os.makedirs(dirpath)
 
     filepath = os.path.join(dirpath, filename)
 
     with open(filepath, 'w') as f:
-      print(f"creating new file at '{filepath}'")
+      print(f"creating new file: '{filepath}'")
       f.write(dataStr)
 
   def _send_ok_res(self):

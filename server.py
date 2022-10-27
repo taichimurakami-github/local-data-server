@@ -1,7 +1,4 @@
 from http.server import HTTPServer
-import socketserver
-import json
-import string
 
 class HTTPLocalWebServer:
     def __init__(self, port= 8080):
