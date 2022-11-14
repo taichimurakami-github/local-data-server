@@ -1,4 +1,6 @@
 import os
+import codecs
+import sys
 from datetime import datetime
 from http.server import BaseHTTPRequestHandler
 from urllib.parse import parse_qs, urlparse
@@ -39,7 +41,7 @@ class FiledataPostHandler(BaseHTTPRequestHandler) :
 
     filepath = os.path.join(dirpath, filename)
 
-    with open(filepath, 'w') as f:
+    with codecs.open(filepath, 'w', 'utf-8')(sys.stdout) as f:
       print(f"creating new file: '{filepath}'")
       f.write(dataStr)
 
@@ -55,7 +57,7 @@ class FiledataPostHandler(BaseHTTPRequestHandler) :
     self.wfile.write(bodyMessage.encode())
 
   # Public methods
-  def do_POST(self):
+  def do_OPTIONS(self):
     # self._print_request_info()
 
     # parse query
