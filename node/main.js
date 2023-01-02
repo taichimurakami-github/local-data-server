@@ -10,29 +10,29 @@ app.use(express.json(), cors());
 app.post("/", function (req, res) {
   console.log(req.body);
   const date = new Date();
-  const filename = req.query.filename;
+  const filepath = req.query.filepath;
 
-  if (!filename) {
-    console.log("filename is not contained");
+  if (!filepath) {
+    console.log("filepath is not contained");
     res.status(400);
-    res.send("E_NO_FILENAME_QUERY");
+    res.send("E_NO_FILEPATH_QUERY");
     return;
   }
 
-  const dirName = `${date.getFullYear()}-${
-    date.getMonth() + 1
-  }-${date.getDate()}`;
-
-  const dir = path.resolve(__dirname, "../", "data", dirName);
+  const dir = path.resolve(__dirname, "./", "data", path.dirname(filepath));
   console.log(dir);
 
   if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir);
+    fs.mkdirSync(dir, { recursive: true });
   }
 
-  fs.writeFileSync(`${dir}/${filename}`, JSON.stringify(req.body), (e) => {
-    console.log(e);
-  });
+  fs.writeFileSync(
+    `${path.resolve(dir, path.basename(filepath))}`,
+    JSON.stringify(req.body),
+    (e) => {
+      console.log(e);
+    }
+  );
 
   res.status(200);
   res.send("succeeded");
