@@ -5,7 +5,7 @@ const path = require("path");
 
 const app = express();
 
-app.use(express.json(), cors());
+app.use(express.json({ limit: "10gb" }), cors());
 
 app.post("/", function (req, res) {
   console.log(req.body);
